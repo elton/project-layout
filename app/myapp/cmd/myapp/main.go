@@ -1,6 +1,9 @@
 package main
 
-import "github.com/elton/project-layout/app/myapp/internal/service"
+import (
+	"github.com/elton/project-layout/app/myapp/internal/pkg/server"
+	"github.com/elton/project-layout/app/myapp/internal/service"
+)
 
 func main() {
 	greeting, err := service.Hello()
@@ -8,4 +11,5 @@ func main() {
 		panic(err)
 	}
 	println(greeting)
+	server.Start()
 }

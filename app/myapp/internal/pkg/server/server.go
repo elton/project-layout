@@ -1,38 +1,43 @@
-package pkg
+package server
 
 import (
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
-	"strconv"
 	"time"
 
+	"github.com/elton/project-layout/app/myapp/internal/router"
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
+const configPath = "/app/myapp/etc/config.yml"
+
 // Start setup a webserver
-func Start(port string) {
-	perfork, _ := strconv.ParseBool(config.Config("PREFORK"))
+func Start() {
+	// perfork, _ := strconv.ParseBool(config.Config("PREFORK"))
+	if err := config.ReadConfig(configPath); err != nil {
+		log.Fatal(err)
+	}
 	// Web server
 	app := fiber.New(fiber.Config{
-		Prefork:       perfork,
+		Prefork:       config.AppCfg.Server.Prefork,
 		StrictRouting: true,
-		ServerHeader:  "BTOE-Server",
-		ReadTimeout:   10 * time.Second,
-		WriteTimeout:  10 * time.Second,
+		ServerHeader:  config.AppCfg.Server.Name,
+		ReadTimeout:   time.Duration(config.AppCfg.Server.ReadTimeout) * time.Second,
+		WriteTimeout:  time.Duration(config.AppCfg.Server.WriteTimeout) * time.Second,
 	})
 
 	// Middleware
 	// app.Use(middleware.Logger())
 	app.Use(cors.New())
 
-	// router.InitializeRouters(app)
+	router.InitializeRouters(app)
 
 	go func() {
-		if err := app.Listen(port); err != nil {
+		if err := app.Listen(config.AppCfg.Server.Port); err != nil {
 			log.Panic(err)
 		}
 	}()

@@ -9,20 +9,25 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-const configPath = "/app/myapp/etc/server.yaml"
-
+// ServerCfg present the configuration of server.
 type ServerCfg struct {
-	Name string `yaml:"name"`
-	Port string `yaml:"port"`
+	Name         string `yaml:"name"`
+	Port         string `yaml:"port"`
+	Prefork      bool   `yaml:"prefork"`
+	ReadTimeout  uint   `yaml:"readTimeout"`
+	WriteTimeout uint   `yaml:"writeTimeout"`
 }
 
+// Cfg represents the configuration of application.
 type Cfg struct {
 	Server ServerCfg `yaml:"server"`
 }
 
+// AppCfg represents the configuration of application.
 var AppCfg *Cfg
 
-func ReadConfig() error {
+// ReadConfig reads the configuration file.
+func ReadConfig(cfgPath string) error {
 	var filePath string
 	if os.Getenv("APP_ENV") == "test" { // in test mode.
 		_, file, _, ok := runtime.Caller(0)
@@ -33,8 +38,12 @@ func ReadConfig() error {
 
 		// return the root of the project.
 		basepath := filepath.Dir(filepath.Dir(file))
-		filePath = filepath.Join(basepath, configPath)
+		filePath = filepath.Join(basepath, cfgPath)
+
+	} else {
+		filePath = filepath.Join("./", cfgPath)
 	}
+	fmt.Println("filePath: ", filePath)
 
 	f, err := os.Open(filePath)
 	if err != nil {

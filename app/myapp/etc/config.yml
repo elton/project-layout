@@ -1,0 +1,6 @@
+server:
+  name: MyApp-Server
+  port: :3300
+  prefork: false
+  readTimeout: 10
+  writeTimeout: 10
