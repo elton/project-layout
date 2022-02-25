@@ -11,6 +11,7 @@ import (
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 const configPath = "/app/myapp/etc/config.yml"
@@ -31,7 +32,9 @@ func Start() {
 	})
 
 	// Middleware
-	// app.Use(middleware.Logger())
+	app.Use(logger.New(logger.Config{
+		Format: "${pid} | ${ua} | ${time} | ${status} | ${latency} | ${ip} | ${method} | ${path}\n",
+	}))
 	app.Use(cors.New())
 
 	router.InitializeRouters(app)
