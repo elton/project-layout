@@ -8,4 +8,9 @@ func InitializeRouters(app *fiber.App) {
 	app.Get("/health", func(c *fiber.Ctx) error {
 		return c.SendString("ok")
 	})
+
+	// test panic recover
+	// app.Get("/", func(c *fiber.Ctx) error {
+	// 	panic("I'm an error")
+	// })
 }

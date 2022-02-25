@@ -10,8 +10,13 @@ import (
 	"github.com/elton/project-layout/app/myapp/internal/router"
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/csrf"
+	"github.com/gofiber/fiber/v2/middleware/etag"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
 const configPath = "/app/myapp/etc/config.yml"
@@ -33,16 +38,19 @@ func Start() {
 
 	// Middleware
 	app.Use(logger.New(logger.Config{
-		Format: "${pid} | ${ua} | ${time} | ${status} | ${latency} | ${ip} | ${method} | ${path}\n",
+		Format: "${locals:requestid} | ${ua} | ${time} | ${status} | ${latency} | ${ip} | ${method} | ${path}\n",
 	}))
 	app.Use(cors.New())
+	app.Use(etag.New())
+	app.Use(requestid.New())
+	app.Use(recover.New())
+	app.Use(compress.New())
+	app.Use(csrf.New())
 
 	router.InitializeRouters(app)
 
 	go func() {
-		if err := app.Listen(config.AppCfg.Server.Port); err != nil {
-			log.Panic(err)
-		}
+		log.Fatal(app.Listen(config.AppCfg.Server.Port))
 	}()
 
 	c := make(chan os.Signal, 1)   // Create channel to signify a signal being sent
