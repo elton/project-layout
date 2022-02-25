@@ -1,6 +1,6 @@
-package myapp
+package service
 
 // Hello returns a friendly greeting.
 func Hello() (string, error) {
-	return "hello, world", nil
+	return "Hello, world!", nil
 }
