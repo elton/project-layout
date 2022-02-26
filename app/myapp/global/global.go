@@ -15,6 +15,7 @@ var (
 		"development": "/app/myapp/etc/config.yml",
 		"production":  "/app/myapp/etc/config_production.yml",
 		"test":        "/app/myapp/etc/config.yml",
+		"":            "/app/myapp/etc/config_production.yml",
 	}
 )
 

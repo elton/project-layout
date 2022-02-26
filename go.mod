@@ -3,6 +3,8 @@ module github.com/elton/project-layout
 go 1.17
 
 require (
+	github.com/brianvoe/gofakeit/v6 v6.14.5
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/gofiber/fiber/v2 v2.27.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
@@ -12,8 +14,6 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.4 // indirect
-	github.com/brianvoe/gofakeit/v6 v6.14.5 // indirect
-	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.4 // indirect

@@ -7,8 +7,8 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/elton/project-layout/app/myapp/api/router"
 	"github.com/elton/project-layout/app/myapp/global"
-	"github.com/elton/project-layout/app/myapp/internal/router"
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"

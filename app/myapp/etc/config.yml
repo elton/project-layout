@@ -7,3 +7,4 @@ server:
 
 database:
   dsn: root@/demo?loc=Local&charset=utf8mb4&parseTime=true
+  logLevel: info

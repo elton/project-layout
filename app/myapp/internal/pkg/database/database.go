@@ -9,6 +9,7 @@ import (
 	"github.com/elton/project-layout/pkg/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	gormLogger "gorm.io/gorm/logger"
 )
 
 var (
@@ -32,7 +33,21 @@ func InitDatabase() (*gorm.DB, error) {
 		DefaultStringSize:         191,                        // string 类型字段的默认长度
 		SkipInitializeWithVersion: false,                      // 根据版本自动配置
 	}
-	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true})
+	var logLevel gormLogger.Interface
+	switch config.AppCfg.Database.LogLevel {
+	case "info":
+		logLevel = gormLogger.Default.LogMode(gormLogger.Info)
+	case "warn":
+		logLevel = gormLogger.Default.LogMode(gormLogger.Warn)
+	case "error":
+		logLevel = gormLogger.Default.LogMode(gormLogger.Error)
+	case "silent":
+		logLevel = gormLogger.Default.LogMode(gormLogger.Silent)
+	}
+	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{
+		DisableForeignKeyConstraintWhenMigrating: true,
+		Logger:                                   logLevel,
+	})
 	if err != nil {
 		logger.Sugar.Errorf("Unable to connect to database: %s", err.Error())
 		return nil, err

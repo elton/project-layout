@@ -34,13 +34,12 @@ func TestModel(t *testing.T) {
 			Age:    gofakeit.Number(18, 100),
 			COMMODEL: global.COMMODEL{
 				ID: id.Int64(),
-				// CreatedAt: time.Now(),
 			},
 		}
 		users = append(users, user)
 	}
 
-	result := database.DB.Debug().Create(&users)
+	result := database.DB.Create(&users)
 	if result.Error != nil {
 		t.Errorf("Create failed: %v", result.Error)
 		return

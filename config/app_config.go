@@ -21,7 +21,8 @@ type ServerCfg struct {
 
 // DatabaseCfg present the configuration of database.
 type DatabaseCfg struct {
-	Dsn string `yaml:"dsn"`
+	Dsn      string `yaml:"dsn"`
+	LogLevel string `yaml:"logLevel"`
 }
 
 // Cfg represents the configuration of application.
