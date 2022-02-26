@@ -43,7 +43,7 @@ func ReadConfig(cfgPath string) error {
 	} else {
 		filePath = filepath.Join("./", cfgPath)
 	}
-	fmt.Println("filePath: ", filePath)
+	// fmt.Println("filePath: ", filePath)
 
 	f, err := os.Open(filePath)
 	if err != nil {

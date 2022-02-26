@@ -20,11 +20,18 @@ import (
 )
 
 const configPath = "/app/myapp/etc/config.yml"
+const configPathProduction = "/app/myapp/etc/config_production.yml"
 
 // Start setup a webserver
 func Start() {
-	// perfork, _ := strconv.ParseBool(config.Config("PREFORK"))
-	if err := config.ReadConfig(configPath); err != nil {
+	var cfgPath string
+	if os.Getenv("APP_ENV") == "development" {
+		cfgPath = configPath
+	} else {
+		cfgPath = configPathProduction
+
+	}
+	if err := config.ReadConfig(cfgPath); err != nil {
 		log.Fatal(err)
 	}
 	// Web server
