@@ -18,6 +18,7 @@ var (
 
 func init() {
 	DB, _ = InitDatabase()
+
 }
 
 // InitDatabase initial the database
@@ -26,7 +27,12 @@ func InitDatabase() (*gorm.DB, error) {
 	if err := config.ReadConfig(global.CfgMap); err != nil {
 		log.Fatal(err)
 	}
-	db, err := gorm.Open(mysql.Open(config.AppCfg.Database.Dsn), &gorm.Config{})
+	mysqlConfig := mysql.Config{
+		DSN:                       config.AppCfg.Database.Dsn, // DSN data source name
+		DefaultStringSize:         191,                        // string 类型字段的默认长度
+		SkipInitializeWithVersion: false,                      // 根据版本自动配置
+	}
+	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{DisableForeignKeyConstraintWhenMigrating: true})
 	if err != nil {
 		logger.Sugar.Errorf("Unable to connect to database: %s", err.Error())
 		return nil, err
