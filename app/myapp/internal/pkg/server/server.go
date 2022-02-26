@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"time"
 
+	"github.com/elton/project-layout/app/myapp/global"
 	"github.com/elton/project-layout/app/myapp/internal/router"
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
@@ -19,19 +20,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
-const configPath = "/app/myapp/etc/config.yml"
-const configPathProduction = "/app/myapp/etc/config_production.yml"
-
 // Start setup a webserver
 func Start() {
-	var cfgPath string
-	if os.Getenv("APP_ENV") == "development" {
-		cfgPath = configPath
-	} else {
-		cfgPath = configPathProduction
-
-	}
-	if err := config.ReadConfig(cfgPath); err != nil {
+	// Read configuration file.
+	if err := config.ReadConfig(global.CfgMap); err != nil {
 		log.Fatal(err)
 	}
 	// Web server

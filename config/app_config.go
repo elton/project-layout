@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/elton/project-layout/pkg/logger"
 	"gopkg.in/yaml.v3"
 )
 
@@ -18,16 +19,22 @@ type ServerCfg struct {
 	WriteTimeout uint   `yaml:"writeTimeout"`
 }
 
+// DatabaseCfg present the configuration of database.
+type DatabaseCfg struct {
+	Dsn string `yaml:"dsn"`
+}
+
 // Cfg represents the configuration of application.
 type Cfg struct {
-	Server ServerCfg `yaml:"server"`
+	Server   ServerCfg   `yaml:"server"`
+	Database DatabaseCfg `yaml:"database"`
 }
 
 // AppCfg represents the configuration of application.
 var AppCfg *Cfg
 
 // ReadConfig reads the configuration file.
-func ReadConfig(cfgPath string) error {
+func ReadConfig(cfgMap map[string]string) error {
 	var filePath string
 	if os.Getenv("APP_ENV") == "test" { // in test mode.
 		_, file, _, ok := runtime.Caller(0)
@@ -38,25 +45,23 @@ func ReadConfig(cfgPath string) error {
 
 		// return the root of the project.
 		basepath := filepath.Dir(filepath.Dir(file))
-		filePath = filepath.Join(basepath, cfgPath)
+		filePath = filepath.Join(basepath, cfgMap[os.Getenv("APP_ENV")])
 
 	} else {
-		filePath = filepath.Join("./", cfgPath)
+		filePath = filepath.Join("./", cfgMap[os.Getenv("APP_ENV")])
 	}
-	// fmt.Println("filePath: ", filePath)
 
 	f, err := os.Open(filePath)
 	if err != nil {
-		fmt.Println(err)
+		logger.Sugar.Errorf("Unable to open config file: %s", filePath)
 		return err
 	}
 	defer f.Close()
 	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(&AppCfg)
-
-	if err != nil {
-		fmt.Println(err)
+	if err = decoder.Decode(&AppCfg); err != nil {
+		logger.Sugar.Errorf("Unable to decode config file: %s", filePath)
 		return err
 	}
+	logger.Sugar.Infof("Successfully loaded config file: %s", filePath)
 	return nil
 }

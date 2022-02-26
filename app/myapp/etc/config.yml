@@ -4,3 +4,6 @@ server:
   prefork: false
   readTimeout: 10
   writeTimeout: 10
+
+database:
+  dsn: root@/demo?loc=Local&charset=utf8mb4&parseTime=true
