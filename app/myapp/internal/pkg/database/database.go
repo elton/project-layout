@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/elton/project-layout/app/myapp/global"
-	"github.com/elton/project-layout/config"
+	"github.com/elton/project-layout/configs"
 	"github.com/elton/project-layout/pkg/logger"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -26,16 +26,16 @@ func init() {
 // InitDatabase initial the database
 func InitDatabase() (*gorm.DB, error) {
 	// Read configuration file.
-	if err := config.ReadConfig(global.CfgMap); err != nil {
+	if err := configs.ReadConfig(global.CfgMap); err != nil {
 		log.Fatal(err)
 	}
 	mysqlConfig := mysql.Config{
-		DSN:                       config.AppCfg.Database.Dsn, // DSN data source name
-		DefaultStringSize:         191,                        // string 类型字段的默认长度
-		SkipInitializeWithVersion: false,                      // 根据版本自动配置
+		DSN:                       configs.AppCfg.Database.Dsn, // DSN data source name
+		DefaultStringSize:         191,                         // string 类型字段的默认长度
+		SkipInitializeWithVersion: false,                       // 根据版本自动配置
 	}
 	var logLevel gormLogger.Interface
-	switch config.AppCfg.Database.LogLevel {
+	switch configs.AppCfg.Database.LogLevel {
 	case "info":
 		logLevel = gormLogger.Default.LogMode(gormLogger.Info)
 	case "warn":
@@ -64,6 +64,6 @@ func InitDatabase() (*gorm.DB, error) {
 	// SetConnMaxLifetime 设置了连接可复用的最大时间。
 	sqlDB.SetConnMaxLifetime(time.Hour)
 
-	logger.Sugar.Infof("Connected to database: %s", config.AppCfg.Database.Dsn)
+	logger.Sugar.Infof("Connected to database: %s", configs.AppCfg.Database.Dsn)
 	return db, nil
 }

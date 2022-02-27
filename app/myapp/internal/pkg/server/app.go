@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/elton/project-layout/app/myapp/global"
-	"github.com/elton/project-layout/config"
+	"github.com/elton/project-layout/configs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -19,16 +19,16 @@ import (
 // NewApp creates a new App instance
 func NewApp() (app *fiber.App) {
 	// Read configuration file.
-	if err := config.ReadConfig(global.CfgMap); err != nil {
+	if err := configs.ReadConfig(global.CfgMap); err != nil {
 		log.Fatal(err)
 	}
 	// Web server
 	app = fiber.New(fiber.Config{
-		Prefork:       config.AppCfg.Server.Prefork,
+		Prefork:       configs.AppCfg.Server.Prefork,
 		StrictRouting: true,
-		ServerHeader:  config.AppCfg.Server.Name,
-		ReadTimeout:   time.Duration(config.AppCfg.Server.ReadTimeout) * time.Second,
-		WriteTimeout:  time.Duration(config.AppCfg.Server.WriteTimeout) * time.Second,
+		ServerHeader:  configs.AppCfg.Server.Name,
+		ReadTimeout:   time.Duration(configs.AppCfg.Server.ReadTimeout) * time.Second,
+		WriteTimeout:  time.Duration(configs.AppCfg.Server.WriteTimeout) * time.Second,
 	})
 
 	// Middleware

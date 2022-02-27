@@ -7,7 +7,7 @@ import (
 	"os/signal"
 
 	"github.com/elton/project-layout/app/myapp/api/router"
-	"github.com/elton/project-layout/config"
+	"github.com/elton/project-layout/configs"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -31,7 +31,7 @@ func (s *Server) Start() {
 	s.router.With(s.app)
 
 	go func() {
-		log.Fatal(s.app.Listen(config.AppCfg.Server.Port))
+		log.Fatal(s.app.Listen(configs.AppCfg.Server.Port))
 	}()
 
 	c := make(chan os.Signal, 1)   // Create channel to signify a signal being sent
