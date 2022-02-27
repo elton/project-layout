@@ -17,7 +17,7 @@ type User struct {
 }
 
 // NewUserRepository presents a repository for users.
-func NewUserRepository(DB *gorm.DB) IUserQuery {
+func NewUserRepository(DB *gorm.DB) IUserRepo {
 	return &mySQLRepository{DB}
 }
 

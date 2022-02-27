@@ -47,8 +47,6 @@ func TestModel(t *testing.T) {
 		users = append(users, user)
 	}
 
-	t.Logf("users: %v", users)
-
 	result := database.DB.Create(&users)
 	if result.Error != nil {
 		t.Errorf("Create failed: %v", result.Error)

@@ -7,6 +7,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.14.5
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/gofiber/fiber/v2 v2.27.0
+	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/zap v1.21.0
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b

@@ -6,8 +6,8 @@ import (
 	"gorm.io/gorm"
 )
 
-// IUserQuery return a user object by given query string
-type IUserQuery interface {
+// IUserRepo return a user object by given query string
+type IUserRepo interface {
 	GetUserByName(ctx context.Context, name string) (*User, error)
 }
 
