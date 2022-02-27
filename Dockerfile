@@ -3,9 +3,7 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY /build/project-layout/myapp .
-# COPY /.env.common .
-# COPY /.env.production .
-COPY app/myapp/etc/config_production.yml app/myapp/etc/config_production.yml
+COPY app/myapp/etc/config_production.yml config.yml
 
 # Resolve the setting `Prefork` to `true` issue.
 RUN apk add dumb-init

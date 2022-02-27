@@ -13,9 +13,9 @@ var (
 	// CfgMap is the global config file
 	CfgMap = map[string]string{
 		"development": "/app/myapp/etc/config.yml",
-		"production":  "/app/myapp/etc/config_production.yml",
+		"production":  "/config.yml",
 		"test":        "/app/myapp/etc/config.yml",
-		"":            "/app/myapp/etc/config_production.yml",
+		"":            "/config.yml",
 	}
 )
 
