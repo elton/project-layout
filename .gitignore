@@ -33,3 +33,4 @@ go.work
 build/
 *.local
 .vscode/
+tmp/
