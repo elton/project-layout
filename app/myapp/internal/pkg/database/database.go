@@ -18,8 +18,9 @@ var (
 )
 
 func init() {
-	DB, _ = InitDatabase()
-
+	if DB == nil {
+		DB, _ = InitDatabase()
+	}
 }
 
 // InitDatabase initial the database
