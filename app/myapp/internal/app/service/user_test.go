@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/elton/project-layout/app/myapp/internal/app/models"
 	"github.com/elton/project-layout/app/myapp/internal/mock"
-	"github.com/elton/project-layout/app/myapp/internal/models"
 	"github.com/golang/mock/gomock"
 )
 

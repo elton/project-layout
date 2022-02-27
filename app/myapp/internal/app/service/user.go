@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/elton/project-layout/app/myapp/internal/models"
+	"github.com/elton/project-layout/app/myapp/internal/app/models"
 )
 
 type userService struct {

@@ -8,7 +8,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	models "github.com/elton/project-layout/app/myapp/internal/models"
+	models "github.com/elton/project-layout/app/myapp/internal/app/models"
 	gomock "github.com/golang/mock/gomock"
 )
 

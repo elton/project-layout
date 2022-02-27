@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/elton/project-layout/app/myapp/internal/models"
+	"github.com/elton/project-layout/app/myapp/internal/app/models"
 	"github.com/elton/project-layout/app/myapp/internal/pkg/database"
 	"github.com/elton/project-layout/pkg/logger"
 )

@@ -1,8 +1,11 @@
 package controllers
 
 import (
-	"github.com/elton/project-layout/app/myapp/internal/service"
+	"net/http"
+
+	"github.com/elton/project-layout/app/myapp/internal/app/service"
 	"github.com/elton/project-layout/pkg/logger"
+	"github.com/elton/project-layout/pkg/response"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -26,5 +29,6 @@ func (u *UserController) GetUserByName(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	return c.JSON(user)
+	response.ResultJSON(c, http.StatusOK, user)
+	return nil
 }

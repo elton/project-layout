@@ -3,10 +3,10 @@ package main
 import (
 	"github.com/elton/project-layout/app/myapp/api/controllers"
 	"github.com/elton/project-layout/app/myapp/api/router"
-	"github.com/elton/project-layout/app/myapp/internal/models"
+	"github.com/elton/project-layout/app/myapp/internal/app/models"
+	"github.com/elton/project-layout/app/myapp/internal/app/service"
 	"github.com/elton/project-layout/app/myapp/internal/pkg/database"
 	"github.com/elton/project-layout/app/myapp/internal/pkg/server"
-	"github.com/elton/project-layout/app/myapp/internal/service"
 )
 
 // InitServer initializes the server
