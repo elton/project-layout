@@ -5,51 +5,33 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"time"
 
 	"github.com/elton/project-layout/app/myapp/api/router"
-	"github.com/elton/project-layout/app/myapp/global"
 	"github.com/elton/project-layout/config"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/compress"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/csrf"
-	"github.com/gofiber/fiber/v2/middleware/etag"
-	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
-// Start setup a webserver
-func Start() {
-	// Read configuration file.
-	if err := config.ReadConfig(global.CfgMap); err != nil {
-		log.Fatal(err)
+// Server represents the webserver
+type Server struct {
+	app    *fiber.App
+	router *router.Router
+}
+
+// NewServer creates a new webserver
+func NewServer(app *fiber.App, router *router.Router) *Server {
+	return &Server{
+		app:    app,
+		router: router,
 	}
-	// Web server
-	app := fiber.New(fiber.Config{
-		Prefork:       config.AppCfg.Server.Prefork,
-		StrictRouting: true,
-		ServerHeader:  config.AppCfg.Server.Name,
-		ReadTimeout:   time.Duration(config.AppCfg.Server.ReadTimeout) * time.Second,
-		WriteTimeout:  time.Duration(config.AppCfg.Server.WriteTimeout) * time.Second,
-	})
+}
 
-	// Middleware
-	app.Use(logger.New(logger.Config{
-		Format: "${locals:requestid} | ${ua} | ${time} | ${status} | ${latency} | ${ip} | ${method} | ${path}\n",
-	}))
-	app.Use(cors.New())
-	app.Use(etag.New())
-	app.Use(requestid.New())
-	app.Use(recover.New())
-	app.Use(compress.New())
-	app.Use(csrf.New())
+// Start setup a webserver
+func (s *Server) Start() {
 
-	router.InitializeRouters(app)
+	s.router.With(s.app)
 
 	go func() {
-		log.Fatal(app.Listen(config.AppCfg.Server.Port))
+		log.Fatal(s.app.Listen(config.AppCfg.Server.Port))
 	}()
 
 	c := make(chan os.Signal, 1)   // Create channel to signify a signal being sent
@@ -57,5 +39,5 @@ func Start() {
 
 	_ = <-c // This blocks the main thread until an interrupt is received
 	fmt.Println("Gracefully shutting down...")
-	_ = app.Shutdown()
+	_ = s.app.Shutdown()
 }
