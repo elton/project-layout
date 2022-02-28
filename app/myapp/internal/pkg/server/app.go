@@ -1,10 +1,8 @@
 package server
 
 import (
-	"log"
 	"time"
 
-	"github.com/elton/project-layout/app/myapp/global"
 	"github.com/elton/project-layout/configs"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
@@ -18,10 +16,7 @@ import (
 
 // NewApp creates a new App instance
 func NewApp() (app *fiber.App) {
-	// Read configuration file.
-	if err := configs.ReadConfig(global.CfgMap); err != nil {
-		log.Fatal(err)
-	}
+
 	// Web server
 	app = fiber.New(fiber.Config{
 		Prefork:       configs.AppCfg.Server.Prefork,

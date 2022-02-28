@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/elton/project-layout/app/myapp/global"
 	"github.com/elton/project-layout/pkg/logger"
 	"gopkg.in/yaml.v3"
 )
@@ -34,8 +35,14 @@ type Cfg struct {
 // AppCfg represents the configuration of application.
 var AppCfg *Cfg
 
+func init() {
+	if err := readConfig(global.CfgMap); err != nil {
+		logger.Sugar.Errorf("Unable to open config file: %s with error: %s", global.CfgMap[os.Getenv("APP_ENV")], err.Error())
+	}
+}
+
 // ReadConfig reads the configuration file.
-func ReadConfig(cfgMap map[string]string) error {
+func readConfig(cfgMap map[string]string) error {
 	var filePath string
 	if os.Getenv("APP_ENV") == "test" { // in test mode.
 		_, file, _, ok := runtime.Caller(0)

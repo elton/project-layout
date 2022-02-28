@@ -1,10 +1,8 @@
 package database
 
 import (
-	"log"
 	"time"
 
-	"github.com/elton/project-layout/app/myapp/global"
 	"github.com/elton/project-layout/configs"
 	"github.com/elton/project-layout/pkg/logger"
 	"gorm.io/driver/mysql"
@@ -25,10 +23,7 @@ func init() {
 
 // InitDatabase initial the database
 func InitDatabase() (*gorm.DB, error) {
-	// Read configuration file.
-	if err := configs.ReadConfig(global.CfgMap); err != nil {
-		log.Fatal(err)
-	}
+
 	mysqlConfig := mysql.Config{
 		DSN:                       configs.AppCfg.Database.Dsn, // DSN data source name
 		DefaultStringSize:         191,                         // string 类型字段的默认长度
