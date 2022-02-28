@@ -6,7 +6,7 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/brianvoe/gofakeit/v6 v6.14.5
 	github.com/bwmarrin/snowflake v0.3.0
-	github.com/gofiber/fiber/v2 v2.27.0
+	github.com/gofiber/fiber/v2 v2.28.0
 	github.com/golang/mock v1.6.0
 	github.com/stretchr/testify v1.7.0
 	go.uber.org/zap v1.21.0
@@ -28,5 +28,5 @@ require (
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
 	go.uber.org/multierr v1.7.0 // indirect
-	golang.org/x/sys v0.0.0-20220224120231-95c6836cb0e7 // indirect
+	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
 )
